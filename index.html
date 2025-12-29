@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トレカ買取専門 - 精密鑑定バイヤー</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent: #d4af37; /* ゴールド */
+            --text: #ffffff;
+            --sub-text: #b0b0b0;
+        }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(to bottom, #000, var(--bg-color));
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .update-time { color: #ff4d4d; font-weight: bold; text-align: center; margin-bottom: 20px; }
+        
+        /* 買取表スタイル */
+        .price-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .price-item {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-name { font-weight: bold; font-size: 1rem; margin-bottom: 5px; }
+        .grade { font-size: 0.8rem; color: var(--accent); margin-bottom: 10px; }
+        .price { font-size: 1.2rem; font-weight: 800; color: #fff; text-align: right; }
+        .price::after { content: " 円"; font-size: 0.8rem; }
+
+        /* こだわりセクション */
+        .features { background: #1a1a1a; padding: 20px; border-radius: 10px; margin: 30px 0; }
+        .features h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 10px; }
+
+        /* CTAボタン */
+        .cta-btn {
+            display: block;
+            background: var(--accent);
+            color: #000;
+            text-align: center;
+            padding: 18px;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 40px 0;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transition: transform 0.2s;
+        }
+        .cta-btn:active { transform: scale(0.95); }
+
+        footer { text-align: center; padding: 40px; color: var(--sub-text); font-size: 0.8rem; }
+        @media (max-width: 480px) { .price-list { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>PREMIUM TCG BUYER</h1>
+    <p style="color: var(--accent);">古物商許可証取得済み：精密鑑定による最高値買取</p>
+</header>
+
+<div class="container">
+    <p class="update-time">最終更新：2025年12月29日 19:00</p>
+
+    <div class="features">
+        <h3>当店のこだわり</h3>
+        <ul>
+            <li><strong>4Kデジタル顕微鏡検品：</strong> 肉眼で見えない傷も正当に評価。</li>
+            <li><strong>PSA10逆算査定：</strong> 完品(Sランク)は業界最高値で買取。</li>
+            <li><strong>24時間以内仮査定：</strong> 資金力2000万を活かした即金対応。</li>
+        </ul>
+    </div>
+
+    <h2>主要買取価格（完品/Sランク）</h2>
+    <div class="price-list">
+        <div class="price-item">
+            <div class="card-name">ピカチュウ 25th プロモ</div>
+            <div class="grade">PSA10候補 / Sランク</div>
+            <div class="price">25,000</div>
+        </div>
+        <div class="price-item">
+            <div class="card-name">リザードンex SAR</div>
+            <div class="grade">PSA10候補 / Sランク</div>
+            <div class="price">38,000</div>
+        </div>
+        <div class="price-item">
+            <div class="card-name">ナンジャモ SAR</div>
+            <div class="grade">PSA10候補 / Sランク</div>
+            <div class="price">85,000</div>
+        </div>
+        <div class="price-item">
+            <div class="card-name">マスターボールミラー(各種)</div>
+            <div class="grade">PSA10候補 / Sランク</div>
+            <div class="price">2,500 〜</div>
+        </div>
+    </div>
+
+    <a href="https://forms.gle/XXXXXXX" class="cta-btn">無料査定を申し込む</a>
+
+    <footer>
+        <p>古物商許可：東京都公安委員会 第XXXXXXXXXXXX号</p>
+        <p>&copy; 2025 PREMIUM TCG BUYER. All Rights Reserved.</p>
+    </footer>
+</div>
+
+</body>
+</html>
