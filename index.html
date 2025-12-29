@@ -3,123 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>トレカ買取専門 - 精密鑑定バイヤー</title>
+    <title>PREMIUM TCG BUYER | 高価買取リスト</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --accent: #d4af37; /* ゴールド */
-            --text: #ffffff;
-            --sub-text: #b0b0b0;
+            --bg-color: #f4f7f9;
+            --accent-blue: #007aff;
+            --price-red: #d63031;
+            --card-white: #ffffff;
+            --text-main: #1c1c1e;
         }
+
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Noto Sans JP', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text);
             margin: 0;
-            padding: 0;
-            line-height: 1.6;
+            padding-bottom: 120px;
+            color: var(--text-main);
         }
+
         header {
-            background: linear-gradient(to bottom, #000, var(--bg-color));
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 2px solid var(--accent);
-        }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        .update-time { color: #ff4d4d; font-weight: bold; text-align: center; margin-bottom: 20px; }
-        
-        /* 買取表スタイル */
-        .price-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .price-item {
-            background: var(--card-bg);
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
             padding: 15px;
-            border: 1px solid #333;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4px;
+            box-sizing: border-box;
+        }
+
+        /* 買取グリッド設定 */
+        .purchase-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* スマホ5列 */
+            gap: 4px;
+        }
+
+        @media (min-width: 768px) {
+            .purchase-grid {
+                grid-template-columns: repeat(6, 1fr); /* PC6列 */
+                gap: 12px;
+            }
+        }
+
+        /* 個別カードアイテム */
+        .card-item {
+            background: var(--card-white);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            border: 1px solid #eee;
+            transition: transform 0.1s;
         }
-        .card-name { font-weight: bold; font-size: 1rem; margin-bottom: 5px; }
-        .grade { font-size: 0.8rem; color: var(--accent); margin-bottom: 10px; }
-        .price { font-size: 1.2rem; font-weight: 800; color: #fff; text-align: right; }
-        .price::after { content: " 円"; font-size: 0.8rem; }
 
-        /* こだわりセクション */
-        .features { background: #1a1a1a; padding: 20px; border-radius: 10px; margin: 30px 0; }
-        .features h3 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 10px; }
+        .card-item:active { transform: scale(0.96); }
 
-        /* CTAボタン */
+        .card-img-wrapper {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            background: #f0f0f0;
+            overflow: hidden;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 4px 1px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-name {
+            font-size: 0.5rem;
+            font-weight: bold;
+            line-height: 1.1;
+            height: 2.2em;
+            overflow: hidden;
+            margin-bottom: 2px;
+        }
+
+        .price-label {
+            font-size: 0.55rem;
+            font-weight: bold;
+            color: #666;
+            letter-spacing: -0.02em;
+        }
+
+        .price-val {
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: var(--price-red);
+            line-height: 1.2;
+        }
+        .price-val::after { content: "円"; font-size: 0.45rem; margin-left: 1px; }
+
+        .quota {
+            font-size: 0.55rem;
+            font-weight: bold;
+            background: #fff0f0;
+            margin-top: 3px;
+            padding: 2px 0;
+            border-top: 1px solid #ffebeb;
+        }
+
+        /* 下部固定ボタン */
+        .bottom-cta {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            max-width: 500px;
+            z-index: 100;
+        }
+
         .cta-btn {
             display: block;
-            background: var(--accent);
-            color: #000;
+            background: var(--accent-blue);
+            color: white;
             text-align: center;
-            padding: 18px;
+            padding: 16px;
             border-radius: 50px;
-            font-weight: bold;
+            font-weight: 900;
             text-decoration: none;
-            font-size: 1.2rem;
-            margin: 40px 0;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            transition: transform 0.2s;
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
+            font-size: 1rem;
         }
-        .cta-btn:active { transform: scale(0.95); }
 
-        footer { text-align: center; padding: 40px; color: var(--sub-text); font-size: 0.8rem; }
-        @media (max-width: 480px) { .price-list { grid-template-columns: 1fr; } }
+        footer {
+            text-align: center;
+            padding: 40px 20px 140px;
+            font-size: 0.65rem;
+            color: #999;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>PREMIUM TCG BUYER</h1>
-    <p style="color: var(--accent);">古物商許可証取得済み：精密鑑定による最高値買取</p>
+    <h1 style="font-size: 1.1rem; margin: 0; font-weight: 900;">PREMIUM TCG BUYER</h1>
+    <div style="font-size: 0.6rem; color: #777; margin-top: 2px;">精密鑑定・最高値買取 | 東京都公安委員会 第XXXXXXXXXXXX号</div>
 </header>
 
 <div class="container">
-    <p class="update-time">最終更新：2025年12月29日 19:00</p>
-
-    <div class="features">
-        <h3>当店のこだわり</h3>
-        <ul>
-            <li><strong>4Kデジタル顕微鏡検品：</strong> 肉眼で見えない傷も正当に評価。</li>
-            <li><strong>PSA10逆算査定：</strong> 完品(Sランク)は業界最高値で買取。</li>
-            <li><strong>24時間以内仮査定：</strong> 資金力2000万を活かした即金対応。</li>
-        </ul>
-    </div>
-
-    <h2>主要買取価格（完品/Sランク）</h2>
-    <div class="price-list">
-        <div class="price-item">
-            <div class="card-name">ピカチュウ 25th プロモ</div>
-            <div class="grade">PSA10候補 / Sランク</div>
-            <div class="price">25,000</div>
+    <div id="card-list" class="purchase-grid">
         </div>
-        <div class="price-item">
-            <div class="card-name">リザードンex SAR</div>
-            <div class="grade">PSA10候補 / Sランク</div>
-            <div class="price">38,000</div>
-        </div>
-        <div class="price-item">
-            <div class="card-name">ナンジャモ SAR</div>
-            <div class="grade">PSA10候補 / Sランク</div>
-            <div class="price">85,000</div>
-        </div>
-        <div class="price-item">
-            <div class="card-name">マスターボールミラー(各種)</div>
-            <div class="grade">PSA10候補 / Sランク</div>
-            <div class="price">2,500 〜</div>
-        </div>
-    </div>
-
-    <a href="https://forms.gle/XXXXXXX" class="cta-btn">無料査定を申し込む</a>
-
-    <footer>
-        <p>古物商許可：東京都公安委員会 第XXXXXXXXXXXX号</p>
-        <p>&copy; 2025 PREMIUM TCG BUYER. All Rights Reserved.</p>
-    </footer>
 </div>
+
+<div class="bottom-cta">
+    <a href="https://forms.gle/XXXXXXX" class="cta-btn">無料査定を依頼する</a>
+</div>
+
+<footer>
+    <p>古物営業法に基づく表記<br>
+    運営責任者：[あなたの氏名]<br>
+    東京都公安委員会 古物商許可 第XXXXXXXXXXXX号</p>
+    <p>&copy; 2025 PREMIUM TCG BUYER. All rights reserved.</p>
+</footer>
+
+<script>
+    // 【スプレッドシートから生成したデータをここに貼り付け】
+    const cardData = [
+        { filename: "2025_m2_110_charizard_sar", year: "2025", set: "M2", num: "110", name: "Charizard", rarity: "SAR", price: "38,000", quota: 2 },
+        { filename: "2025_m2a_219_canari_sr", year: "2025", set: "M2a", num: "219", name: "Canari", rarity: "SR", price: "4,500", quota: 5 },
+        { filename: "2025_m2a_210_n'szekrom_ar", year: "2025", set: "M2a", num: "210", name: "N's Zekrom", rarity: "AR", price: "1,200", quota: 10 },
+        { filename: "2025_m2a_233_megafroslassex_sar", year: "2025", set: "M2a", num: "233", name: "Mega Froslass EX", rarity: "SAR", price: "15,000", quota: 3 },
+        { filename: "2025_m2a_234_pikachuex_sar", year: "2025", set: "M2a", num: "234", name: "Pikachu EX", rarity: "SAR", price: "45,000", quota: 2 },
+        { filename: "2025_m2a_235_megaeelektrossex_sar", year: "2025", set: "M2a", num: "235", name: "Mega Eelektross EX", rarity: "SAR", price: "8,500", quota: 3 },
+        { filename: "2025_m2a_236_iono'sbelliboltex_sar", year: "2025", set: "M2a", num: "236", name: "Iono's Bellibolt EX", rarity: "SAR", price: "12,000", quota: 2 },
+        { filename: "2025_m2a_237_teamrocket'smewtwoex_sar", year: "2025", set: "M2a", num: "237", name: "Team Rocket's Mewtwo EX", rarity: "SAR", price: "55,000", quota: 1 },
+        { filename: "2025_m2a_238_megadiancieex_sar", year: "2025", set: "M2a", num: "238", name: "Mega Diancie EX", rarity: "SAR", price: "9,000", quota: 3 },
+        { filename: "2025_m2a_239_megahawluchaex_sar", year: "2025", set: "M2a", num: "239", name: "Mega Hawlucha EX", rarity: "SAR", price: "7,500", quota: 4 },
+        { filename: "2025_m2a_240_megagengarex_sar", year: "2025", set: "M2a", num: "240", name: "Mega Gengar EX", rarity: "SAR", price: "28,000", quota: 2 },
+        { filename: "2025_m2a_241_megascraftyex_sar", year: "2025", set: "M2a", num: "241", name: "Mega Scrafty EX", rarity: "SAR", price: "6,500", quota: 5 },
+        { filename: "2025_m2a_242_n'szoroarkex_sar", year: "2025", set: "M2a", num: "242", name: "N's Zoroark EX", rarity: "SAR", price: "18,000", quota: 3 },
+        { filename: "2025_m2a_243_marnie'sgrimmsnarlex_sar", year: "2025", set: "M2a", num: "243", name: "Marnie's Grimmsnarl EX", rarity: "SAR", price: "14,000", quota: 2 },
+        { filename: "2025_m2a_244_fezandipitiex_sar", year: "2025", set: "M2a", num: "244", name: "Fezandipiti EX", rarity: "SAR", price: "22,000", quota: 2 },
+        { filename: "2025_m2a_245_steven'smetagrossex_sar", year: "2025", set: "M2a", num: "245", name: "Steven's Metagross EX", rarity: "SAR", price: "32,000", quota: 1 },
+        { filename: "2025_m2a_246_megadragoniteex_sar", year: "2025", set: "M2a", num: "246", name: "Mega Dragonite EX", rarity: "SAR", price: "24,000", quota: 2 },
+        { filename: "2025_m2a_248_canari_sar", year: "2025", set: "M2a", num: "248", name: "Canari", rarity: "SAR", price: "19,000", quota: 2 },
+        { filename: "2025_sv9_126_lillie'sclefairyex_sar", year: "2025", set: "SV9", num: "126", name: "Lillie's Clefairy EX", rarity: "SAR", price: "68,000", quota: 1 }
+    ];
+
+    const listContainer = document.getElementById('card-list');
+
+    cardData.forEach(card => {
+        const imgPath = `img/${card.filename}.webp`;
+        const html = `
+            <div class="card-item">
+                <div class="card-img-wrapper">
+                    <img src="${imgPath}" alt="${card.name}" loading="lazy" onerror="this.src='https://placehold.jp/120x160.png?text=NO+IMAGE'">
+                </div>
+                <div class="card-content">
+                    <div class="card-name">${card.name}</div>
+                    <span class="price-label">買取価格</span>
+                    <span class="price-val">${card.price}</span>
+                    <div class="quota">あと ${card.quota} 枚</div>
+                </div>
+            </div>
+        `;
+        listContainer.insertAdjacentHTML('beforeend', html);
+    });
+</script>
 
 </body>
 </html>
