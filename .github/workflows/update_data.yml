@@ -1,0 +1,26 @@
+name: Update Card Data
+
+on:
+  schedule:
+    - cron: '0 * * * *' # 1時間ごとに自動更新
+  workflow_dispatch:      # GitHubの画面から手動で更新ボタンを押せるようにする
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch data from GAS
+        run: |
+          # 以前作成したGASのWebアプリURLを入れてください
+          curl -L "https://script.google.com/macros/s/AKfycby7IR4L_75LQq8l71BhXLsQzkcOBYQG_P6bxNdpC8Q-kV7WYYvjqLf9c5ulpxErzRpX0w/exec" -o data.json
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data.json
+          # 変更がある場合のみコミット
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update card data from spreadsheet" && git push)
