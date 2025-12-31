@@ -2,7 +2,7 @@ name: Update Card Data
 
 on:
   schedule:
-    - cron: '0 * * * *' # 1時間ごとに自動更新
+    - cron: '0 1 * * *'  # UTC時間でAM1:00 ＝ 日本時間でAM10:00
   workflow_dispatch:      # GitHubの画面から手動で更新ボタンを押せるようにする
 
 jobs:
