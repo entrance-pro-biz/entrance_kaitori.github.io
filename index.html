@@ -179,14 +179,16 @@
 </footer>
 
 <script>
-    // 先ほどコピーしたGASのウェブアプリURLをここに貼り付け
-    const API_URL = "https://script.google.com/macros/s/AKfycby7IR4L_75LQq8l71BhXLsQzkcOBYQG_P6bxNdpC8Q-kV7WYYvjqLf9c5ulpxErzRpX0w/exec";
-
+    const API_URL = "./data.json";
     async function loadCardData() {
         const listContainer = document.getElementById('card-list');
-        
+    
         try {
+            // 同じサーバー（GitHub）上のjsonファイルを読み込むため、爆速です
             const response = await fetch(API_URL);
+        
+            // ファイルがまだ生成されていない場合のハンドリング
+            if (!response.ok) throw new Error('Data file not found');
             const cardData = await response.json();
 
             // コンテナを一度空にする
@@ -202,7 +204,7 @@
                         <div class="card-content">
                             <div class="card-name">${card.name}</div>
                             <span class="price-label">買取価格</span>
-                            <span class="price-val">${card.price}</span>
+                            <span class="price-val">${Number(card.price).toLocaleString()}</span>
                             <div class="quota">あと ${card.quota} 枚</div>
                         </div>
                     </div>
