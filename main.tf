@@ -74,28 +74,33 @@ resource "aws_iam_role_policy_attachment" "lambda_attach" {
   policy_arn = aws_iam_policy.lambda_s3_policy.arn
 }
 
-# --- 3. Lambda Function ---
-data "archive_file" "dummy" {
+# ---------------------------------------------
+# 3. Lambda Function (更新版)
+# ---------------------------------------------
+# ローカルの lambda_function.py をzip化
+data "archive_file" "lambda_zip" {
   type        = "zip"
-  output_path = "dummy.zip"
-  source {
-    content  = "def lambda_handler(e, c): print('init')"
-    filename = "lambda_function.py"
-  }
+  source_file = "lambda_function.py"       # ★ここを変更
+  output_path = "lambda_function.zip"
 }
 
 resource "aws_lambda_function" "gallery_sync" {
-  filename      = "dummy.zip"
+  filename      = data.archive_file.lambda_zip.output_path
   function_name = "card_gallery_sync"
   role          = aws_iam_role.lambda_exec_role.arn
   handler       = "lambda_function.lambda_handler"
+
+  # ★重要: コードが変わったら再デプロイする設定
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+
   runtime       = "python3.11"
-  timeout       = 300
+  timeout       = 300 # 5分
+
   environment {
     variables = {
-      S3_BUCKET_NAME = aws_s3_bucket.gallery_bucket.id
-      GOOGLE_API_KEY = "dummy"
-      SPREADSHEET_ID = "dummy"
+      S3_BUCKET_NAME  = aws_s3_bucket.gallery_bucket.id
+      SPREADSHEET_ID  = "1oNkhjE_FqOYkYi7dfggXhF3zmeEC_fXTXjMYenWvD_k"
+      SPREADSHEET_GID = "1192170899"
     }
   }
 }
