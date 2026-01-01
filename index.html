@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>エントランスの買取広場 | 高価買取リスト</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f7f9;
+            --accent-blue: #007aff;
+            --price-red: #d63031;
+            --card-white: #ffffff;
+            --text-main: #1c1c1e;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding-bottom: 120px;
+            color: var(--text-main);
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4px;
+            box-sizing: border-box;
+        }
+
+        /* 買取グリッド設定 */
+        .purchase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* スマホで見やすく3列に変更(画像サイズ確保のため) */
+            gap: 6px;
+        }
+
+        @media (min-width: 400px) {
+            .purchase-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        @media (min-width: 768px) {
+            .purchase-grid {
+                grid-template-columns: repeat(6, 1fr); /* PC6列 */
+                gap: 12px;
+            }
+        }
+
+        /* 個別カードアイテム */
+        .card-item {
+            background: var(--card-white);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eee;
+            transition: transform 0.1s;
+        }
+
+        .card-item:active { transform: scale(0.96); }
+
+        .card-img-wrapper {
+            width: 100%;
+            aspect-ratio: 3 / 4; /* ポケカの比率に合わせる */
+            background: #f0f0f0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 枠いっぱいに表示 */
+        }
+
+        .card-content {
+            padding: 6px 2px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .card-name {
+            font-size: 0.6rem;
+            font-weight: bold;
+            line-height: 1.2;
+            height: 2.4em; /* 2行制限 */
+            overflow: hidden;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .price-label {
+            font-size: 0.5rem;
+            font-weight: bold;
+            color: #888;
+            margin-bottom: -2px;
+        }
+
+        .price-val {
+            font-size: 0.9rem;
+            font-weight: 900;
+            color: var(--price-red);
+            line-height: 1.2;
+        }
+        .price-val::after { content: "円"; font-size: 0.5rem; margin-left: 1px; color: #333; }
+
+        .meta-info {
+            font-size: 0.5rem;
+            font-weight: bold;
+            background: #f0f4f8;
+            color: #555;
+            margin-top: 4px;
+            padding: 2px 0;
+            border-radius: 2px;
+        }
+
+        /* 下部固定ボタン */
+        .bottom-cta {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            max-width: 500px;
+            z-index: 100;
+        }
+
+        .cta-btn {
+            display: block;
+            background: #06c755; /* LINE Green */
+            color: white;
+            text-align: center;
+            padding: 16px;
+            border-radius: 50px;
+            font-weight: 900;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(6, 199, 85, 0.3);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px 140px;
+            font-size: 0.65rem;
+            color: #999;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 style="font-size: 1.1rem; margin: 0; font-weight: 900;">エントランスの買取広場</h1>
+    <div style="font-size: 0.6rem; color: #777; margin-top: 2px;">精密鑑定・最高値買取 | 東京都公安委員会 第302202117826号</div>
+</header>
+
+<div class="container">
+    <div id="card-list" class="purchase-grid">
+        <p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #888;">読み込み中...</p>
+    </div>
+</div>
+
+<div class="bottom-cta">
+    <a href="https://lin.ee/Ec61nL8" class="cta-btn">
+        <span>LINEで無料査定を依頼する</span>
+    </a>
+</div>
+
+<footer>
+    <p>古物営業法に基づく表記<br>
+    運営責任者：Entrance<br>
+    東京都公安委員会 古物商許可 第302202117826号</p>
+    <p>&copy; 2026 PREMIUM TCG BUYER. All rights reserved.</p>
+</footer>
+
+<script>
+    const API_URL = "./data.json";
+
+    async function loadCardData() {
+        const listContainer = document.getElementById('card-list');
+        
+        try {
+            // S3上の data.json を取得
+            const response = await fetch(API_URL);
+            
+            if (!response.ok) throw new Error('Data file not found');
+            const data = await response.json();
+
+            // コンテナをクリア
+            listContainer.innerHTML = "";
+
+            // Lambdaの生成するJSON形式 { "cards": [...] } に対応
+            const cards = data.cards || [];
+
+            if (cards.length === 0) {
+                listContainer.innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>現在、高価買取リストを更新中です。</p>";
+                return;
+            }
+
+            cards.forEach(card => {
+                // S3のURLをそのまま使用
+                const imgPath = card.image;
+                
+                // 表示用HTMLの生成
+                const html = `
+                    <div class="card-item">
+                        <div class="card-img-wrapper">
+                            <img src="${imgPath}" alt="${card.name}" loading="lazy" onerror="this.src='https://placehold.jp/150x210.png?text=No+Image'">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-name">${card.name}</div>
+                            <div>
+                                <span class="price-label">買取価格</span>
+                                <div class="price-val">${Number(card.price).toLocaleString()}</div>
+                            </div>
+                            <div class="meta-info">${card.number} / ${card.rarity}</div>
+                        </div>
+                    </div>
+                `;
+                listContainer.insertAdjacentHTML('beforeend', html);
+            });
+
+        } catch (error) {
+            console.error("データの読み込みに失敗しました:", error);
+            listContainer.innerHTML = "<p style='grid-column: 1/-1; text-align: center; padding:20px; color:red;'>データの読み込みに失敗しました。<br>しばらく経ってから再読み込みしてください。</p>";
+        }
+    }
+
+    // 実行
+    loadCardData();
+</script>
+
+</body>
+</html>
