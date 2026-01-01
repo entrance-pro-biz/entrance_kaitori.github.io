@@ -123,6 +123,17 @@
         }
         .price-val::after { content: "円"; font-size: 0.5rem; margin-left: 1px; color: #333; }
 
+	.quota-info {
+            font-size: 0.6rem;
+            color: #fff;
+            background-color: #ff9800; /* オレンジ */
+            border-radius: 10px;
+            padding: 1px 6px;
+            margin: 2px auto;
+            display: inline-block;
+            font-weight: bold;
+        }
+
         .meta-info {
             font-size: 0.5rem;
             font-weight: bold;
@@ -221,20 +232,21 @@
             }
 
             cards.forEach(card => {
-                // S3のURLをそのまま使用
-                const imgPath = card.image;
-                
+		// 枚数が空の場合は「募集中」にする等の調整
+                const quotaText = card.quota ? `あと ${card.quota} 枚` : '募集中';
+
                 // 表示用HTMLの生成
                 const html = `
                     <div class="card-item">
                         <div class="card-img-wrapper">
-                            <img src="${imgPath}" alt="${card.name}" loading="lazy" onerror="this.src='https://placehold.jp/150x210.png?text=No+Image'">
+                            <img src="${card.image}" alt="${card.name}" loading="lazy" onerror="this.src='https://placehold.jp/150x210.png?text=No+Image'">
                         </div>
                         <div class="card-content">
                             <div class="card-name">${card.name}</div>
                             <div>
                                 <span class="price-label">買取価格</span>
                                 <div class="price-val">${Number(card.price).toLocaleString()}</div>
+				<div class="quota-info">${quotaText}</div>
                             </div>
                             <div class="meta-info">${card.number} / ${card.rarity}</div>
                         </div>

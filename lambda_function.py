@@ -33,6 +33,7 @@ def lambda_handler(event, context):
                 'number': 3,  # D列: 型番
                 'rarity': 4,  # E列: レアリティ
                 'price': 7,   # H列: 買取価格
+                'quota': 8,   # I列: 枚数
                 'url': 9      # J列: 元画像URL
             }
         except:
@@ -49,6 +50,7 @@ def lambda_handler(event, context):
             card_number = row[col_idx['number']]
             card_rarity = row[col_idx['rarity']]
             price_str = row[col_idx['price']]
+            quota_str = row[col_idx['quota']]
             drive_url = row[col_idx['url']]
             
             # 価格が入っていないものはスキップ（Webには出さない）
@@ -100,6 +102,7 @@ def lambda_handler(event, context):
                 "number": card_number,
                 "rarity": card_rarity,
                 "price": price_str,
+                "quota": quota_str,
                 "image": s3_url
             })
             
