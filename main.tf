@@ -100,7 +100,7 @@ resource "aws_lambda_function" "gallery_sync" {
     variables = {
       S3_BUCKET_NAME  = aws_s3_bucket.gallery_bucket.id
       SPREADSHEET_ID  = "1oNkhjE_FqOYkYi7dfggXhF3zmeEC_fXTXjMYenWvD_k"
-      SPREADSHEET_GID = "1192170899"
+      SPREADSHEET_GID = "1921708992"
     }
   }
 }
