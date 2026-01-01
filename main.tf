@@ -104,3 +104,24 @@ resource "aws_lambda_function" "gallery_sync" {
     }
   }
 }
+# ---------------------------------------------
+# 4. 更新用URL (Magic Link)
+# ---------------------------------------------
+# LambdaにURLを付与
+resource "aws_lambda_function_url" "trigger_url" {
+  function_name      = aws_lambda_function.gallery_sync.function_name
+  authorization_type = "NONE" # 認証なし（URLを知っている人だけが実行できる）
+}
+
+# 外部からURL経由で実行する許可
+resource "aws_lambda_permission" "allow_url" {
+  action                 = "lambda:InvokeFunctionUrl"
+  function_name          = aws_lambda_function.gallery_sync.function_name
+  principal              = "*"
+  function_url_auth_type = "NONE"
+}
+
+# 実行後にターミナルにURLを表示する設定
+output "update_site_url" {
+  value = aws_lambda_function_url.trigger_url.function_url
+}
